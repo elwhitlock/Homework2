@@ -1,0 +1,133 @@
+---
+title: "Programming Base R"
+format: html
+editor: visual
+---
+
+# Task 1
+
+## Q1 and Q2
+
+We will define our pre and post treatment blood pressure **vectors**, ensuring we label the patients accordingly.
+
+```{r}
+pre_bp <- c(120, 151, 125, 126, 115, 132, 132, 129, 134, 139, 127, 122, 127, 135, 133, 128, 147, 138, 140, 132)
+names(pre_bp) <- paste("Subject", 1:20, sep = "_")
+
+post_bp <- c(127, 145, 135, 122, 115, 122, 123, 126, 126, 129, 132, 146, 120, 114, 121, 120, 128, 120, 133, 115)
+names(post_bp) <- paste("Subject", 1:20, sep = "_")
+
+```
+
+## Q3 and Q4
+
+We will save these differences (pre-post) as a **vector**. We are curious what the **mean** difference is.
+
+```{r}
+diff_bp <- pre_bp - post_bp
+mean(diff_bp)
+```
+
+## Q5
+
+Which subjects saw a **decrease** in blood pressure?
+
+```{r}
+names(which(diff_bp>0))
+```
+
+## Q6 and Q7
+
+What is the **mean decrease** among these subjects?
+
+```{r}
+mean(diff_bp[diff_bp>0])
+```
+
+# Task 2
+
+## Q1
+
+Lets create an **data frame** using the above **vectors**.
+
+```{r}
+bp_df <- data.frame(patient=names(pre_bp),pre_bp, post_bp, diff_bp, row.names = NULL)
+
+```
+
+## Q2
+
+Which of the patients in our **data frame** saw an **increase** in blood pressure?
+
+```{r}
+bp_df[bp_df$diff_bp<0,]
+```
+
+## Q3 and Q4
+
+Lets add a column to check whose post blood pressure is **less** than 120, and display our data frame.
+
+```{r}
+bp_df$post_less120 <- bp_df$post_bp<120
+knitr::kable(bp_df)
+```
+
+# Task 3
+
+## Q1
+
+We are doing the exact same thing we did with the treatment group except with the placebo group to create a **data frame**.
+
+```{r}
+pre_bp2 <- c(138, 135, 147, 117, 152, 134, 114, 121, 131, 130)
+names(pre_bp2) <- paste("Subject", 1:10, sep = "_")
+post_bp2 <- c(105, 136, 123, 130, 134, 143, 135, 139, 120, 124)
+names(post_bp) <- paste("Subject", 1:10, sep = "_")
+diff_bp2 <- pre_bp2-post_bp2
+bp_df2 <- data.frame(patient=names(pre_bp2),pre_bp2, post_bp2, diff_bp2, row.names = NULL)
+bp_df2$post_less120 <- bp_df2$post_bp<120
+knitr::kable(bp_df2)
+
+```
+
+## Q2
+
+Now we will stack our two **data frames**, one for treatment one for placebo in a **list**.
+
+```{r}
+bp_list <- list(treatment=bp_df, placebo=bp_df2)
+```
+
+## Q3
+
+We need to obtain the first element in our **list** three different ways.
+
+-   Method 1:
+
+```{r}
+bp_list[[1]]
+
+```
+
+-   Method 2:
+
+```{r}
+bp_list[1]
+```
+
+-   Method 3:
+
+```{r}
+bp_list$treatment
+```
+
+
+## Q4
+
+Finally we need to access the pre blood pressure placebo column of data in our above **list**.
+
+```{r}
+bp_list$placebo$pre_bp2
+
+```
+

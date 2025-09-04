@@ -1,0 +1,86 @@
+[
+  {
+    "objectID": "Programming Base R.html",
+    "href": "Programming Base R.html",
+    "title": "Programming Base R",
+    "section": "",
+    "text": "We will define our pre and post treatment blood pressure vectors, ensuring we label the patients accordingly.\n\npre_bp &lt;- c(120, 151, 125, 126, 115, 132, 132, 129, 134, 139, 127, 122, 127, 135, 133, 128, 147, 138, 140, 132)\nnames(pre_bp) &lt;- paste(\"Subject\", 1:20, sep = \"_\")\n\npost_bp &lt;- c(127, 145, 135, 122, 115, 122, 123, 126, 126, 129, 132, 146, 120, 114, 121, 120, 128, 120, 133, 115)\nnames(post_bp) &lt;- paste(\"Subject\", 1:20, sep = \"_\")\n\n\n\n\nWe will save these differences (pre-post) as a vector. We are curious what the mean difference is.\n\ndiff_bp &lt;- pre_bp - post_bp\nmean(diff_bp)\n\n[1] 5.65\n\n\n\n\n\nWhich subjects saw a decrease in blood pressure?\n\nnames(which(diff_bp&gt;0))\n\n [1] \"Subject_2\"  \"Subject_4\"  \"Subject_6\"  \"Subject_7\"  \"Subject_8\" \n [6] \"Subject_9\"  \"Subject_10\" \"Subject_13\" \"Subject_14\" \"Subject_15\"\n[11] \"Subject_16\" \"Subject_17\" \"Subject_18\" \"Subject_19\" \"Subject_20\"\n\n\n\n\n\nWhat is the mean decrease among these subjects?\n\nmean(diff_bp[diff_bp&gt;0])\n\n[1] 10.6"
+  },
+  {
+    "objectID": "Programming Base R.html#q1-and-q2",
+    "href": "Programming Base R.html#q1-and-q2",
+    "title": "Programming Base R",
+    "section": "",
+    "text": "We will define our pre and post treatment blood pressure vectors, ensuring we label the patients accordingly.\n\npre_bp &lt;- c(120, 151, 125, 126, 115, 132, 132, 129, 134, 139, 127, 122, 127, 135, 133, 128, 147, 138, 140, 132)\nnames(pre_bp) &lt;- paste(\"Subject\", 1:20, sep = \"_\")\n\npost_bp &lt;- c(127, 145, 135, 122, 115, 122, 123, 126, 126, 129, 132, 146, 120, 114, 121, 120, 128, 120, 133, 115)\nnames(post_bp) &lt;- paste(\"Subject\", 1:20, sep = \"_\")"
+  },
+  {
+    "objectID": "Programming Base R.html#q3-and-q4",
+    "href": "Programming Base R.html#q3-and-q4",
+    "title": "Programming Base R",
+    "section": "",
+    "text": "We will save these differences (pre-post) as a vector. We are curious what the mean difference is.\n\ndiff_bp &lt;- pre_bp - post_bp\nmean(diff_bp)\n\n[1] 5.65"
+  },
+  {
+    "objectID": "Programming Base R.html#q5",
+    "href": "Programming Base R.html#q5",
+    "title": "Programming Base R",
+    "section": "",
+    "text": "Which subjects saw a decrease in blood pressure?\n\nnames(which(diff_bp&gt;0))\n\n [1] \"Subject_2\"  \"Subject_4\"  \"Subject_6\"  \"Subject_7\"  \"Subject_8\" \n [6] \"Subject_9\"  \"Subject_10\" \"Subject_13\" \"Subject_14\" \"Subject_15\"\n[11] \"Subject_16\" \"Subject_17\" \"Subject_18\" \"Subject_19\" \"Subject_20\""
+  },
+  {
+    "objectID": "Programming Base R.html#q6-and-q7",
+    "href": "Programming Base R.html#q6-and-q7",
+    "title": "Programming Base R",
+    "section": "",
+    "text": "What is the mean decrease among these subjects?\n\nmean(diff_bp[diff_bp&gt;0])\n\n[1] 10.6"
+  },
+  {
+    "objectID": "Programming Base R.html#q1",
+    "href": "Programming Base R.html#q1",
+    "title": "Programming Base R",
+    "section": "Q1",
+    "text": "Q1\nLets create an data frame using the above vectors.\n\nbp_df &lt;- data.frame(patient=names(pre_bp),pre_bp, post_bp, diff_bp, row.names = NULL)"
+  },
+  {
+    "objectID": "Programming Base R.html#q2",
+    "href": "Programming Base R.html#q2",
+    "title": "Programming Base R",
+    "section": "Q2",
+    "text": "Q2\nWhich of the patients in our data frame saw an increase in blood pressure?\n\nbp_df[bp_df$diff_bp&lt;0,]\n\n      patient pre_bp post_bp diff_bp\n1   Subject_1    120     127      -7\n3   Subject_3    125     135     -10\n11 Subject_11    127     132      -5\n12 Subject_12    122     146     -24"
+  },
+  {
+    "objectID": "Programming Base R.html#q3-and-q4-1",
+    "href": "Programming Base R.html#q3-and-q4-1",
+    "title": "Programming Base R",
+    "section": "Q3 and Q4",
+    "text": "Q3 and Q4\nLets add a column to check whose post blood pressure is less than 120, and display our data frame.\n\nbp_df$post_less120 &lt;- bp_df$post_bp&lt;120\nknitr::kable(bp_df)\n\n\n\n\npatient\npre_bp\npost_bp\ndiff_bp\npost_less120\n\n\n\n\nSubject_1\n120\n127\n-7\nFALSE\n\n\nSubject_2\n151\n145\n6\nFALSE\n\n\nSubject_3\n125\n135\n-10\nFALSE\n\n\nSubject_4\n126\n122\n4\nFALSE\n\n\nSubject_5\n115\n115\n0\nTRUE\n\n\nSubject_6\n132\n122\n10\nFALSE\n\n\nSubject_7\n132\n123\n9\nFALSE\n\n\nSubject_8\n129\n126\n3\nFALSE\n\n\nSubject_9\n134\n126\n8\nFALSE\n\n\nSubject_10\n139\n129\n10\nFALSE\n\n\nSubject_11\n127\n132\n-5\nFALSE\n\n\nSubject_12\n122\n146\n-24\nFALSE\n\n\nSubject_13\n127\n120\n7\nFALSE\n\n\nSubject_14\n135\n114\n21\nTRUE\n\n\nSubject_15\n133\n121\n12\nFALSE\n\n\nSubject_16\n128\n120\n8\nFALSE\n\n\nSubject_17\n147\n128\n19\nFALSE\n\n\nSubject_18\n138\n120\n18\nFALSE\n\n\nSubject_19\n140\n133\n7\nFALSE\n\n\nSubject_20\n132\n115\n17\nTRUE"
+  },
+  {
+    "objectID": "Programming Base R.html#q1-1",
+    "href": "Programming Base R.html#q1-1",
+    "title": "Programming Base R",
+    "section": "Q1",
+    "text": "Q1\nWe are doing the exact same thing we did with the treatment group except with the placebo group to create a data frame.\n\npre_bp2 &lt;- c(138, 135, 147, 117, 152, 134, 114, 121, 131, 130)\nnames(pre_bp2) &lt;- paste(\"Subject\", 1:10, sep = \"_\")\npost_bp2 &lt;- c(105, 136, 123, 130, 134, 143, 135, 139, 120, 124)\nnames(post_bp) &lt;- paste(\"Subject\", 1:10, sep = \"_\")\ndiff_bp2 &lt;- pre_bp2-post_bp2\nbp_df2 &lt;- data.frame(patient=names(pre_bp2),pre_bp2, post_bp2, diff_bp2, row.names = NULL)\nbp_df2$post_less120 &lt;- bp_df2$post_bp&lt;120\nknitr::kable(bp_df2)\n\n\n\n\npatient\npre_bp2\npost_bp2\ndiff_bp2\npost_less120\n\n\n\n\nSubject_1\n138\n105\n33\nTRUE\n\n\nSubject_2\n135\n136\n-1\nFALSE\n\n\nSubject_3\n147\n123\n24\nFALSE\n\n\nSubject_4\n117\n130\n-13\nFALSE\n\n\nSubject_5\n152\n134\n18\nFALSE\n\n\nSubject_6\n134\n143\n-9\nFALSE\n\n\nSubject_7\n114\n135\n-21\nFALSE\n\n\nSubject_8\n121\n139\n-18\nFALSE\n\n\nSubject_9\n131\n120\n11\nFALSE\n\n\nSubject_10\n130\n124\n6\nFALSE"
+  },
+  {
+    "objectID": "Programming Base R.html#q2-1",
+    "href": "Programming Base R.html#q2-1",
+    "title": "Programming Base R",
+    "section": "Q2",
+    "text": "Q2\nNow we will stack our two data frames, one for treatment one for placebo in a list.\n\nbp_list &lt;- list(treatment=bp_df, placebo=bp_df2)"
+  },
+  {
+    "objectID": "Programming Base R.html#q3",
+    "href": "Programming Base R.html#q3",
+    "title": "Programming Base R",
+    "section": "Q3",
+    "text": "Q3\nWe need to obtain the first element in our list three different ways.\n\nMethod 1:\n\n\nbp_list[[1]]\n\n      patient pre_bp post_bp diff_bp post_less120\n1   Subject_1    120     127      -7        FALSE\n2   Subject_2    151     145       6        FALSE\n3   Subject_3    125     135     -10        FALSE\n4   Subject_4    126     122       4        FALSE\n5   Subject_5    115     115       0         TRUE\n6   Subject_6    132     122      10        FALSE\n7   Subject_7    132     123       9        FALSE\n8   Subject_8    129     126       3        FALSE\n9   Subject_9    134     126       8        FALSE\n10 Subject_10    139     129      10        FALSE\n11 Subject_11    127     132      -5        FALSE\n12 Subject_12    122     146     -24        FALSE\n13 Subject_13    127     120       7        FALSE\n14 Subject_14    135     114      21         TRUE\n15 Subject_15    133     121      12        FALSE\n16 Subject_16    128     120       8        FALSE\n17 Subject_17    147     128      19        FALSE\n18 Subject_18    138     120      18        FALSE\n19 Subject_19    140     133       7        FALSE\n20 Subject_20    132     115      17         TRUE\n\n\n\nMethod 2:\n\n\nbp_list[1]\n\n$treatment\n      patient pre_bp post_bp diff_bp post_less120\n1   Subject_1    120     127      -7        FALSE\n2   Subject_2    151     145       6        FALSE\n3   Subject_3    125     135     -10        FALSE\n4   Subject_4    126     122       4        FALSE\n5   Subject_5    115     115       0         TRUE\n6   Subject_6    132     122      10        FALSE\n7   Subject_7    132     123       9        FALSE\n8   Subject_8    129     126       3        FALSE\n9   Subject_9    134     126       8        FALSE\n10 Subject_10    139     129      10        FALSE\n11 Subject_11    127     132      -5        FALSE\n12 Subject_12    122     146     -24        FALSE\n13 Subject_13    127     120       7        FALSE\n14 Subject_14    135     114      21         TRUE\n15 Subject_15    133     121      12        FALSE\n16 Subject_16    128     120       8        FALSE\n17 Subject_17    147     128      19        FALSE\n18 Subject_18    138     120      18        FALSE\n19 Subject_19    140     133       7        FALSE\n20 Subject_20    132     115      17         TRUE\n\n\n\nMethod 3:\n\n\nbp_list$treatment\n\n      patient pre_bp post_bp diff_bp post_less120\n1   Subject_1    120     127      -7        FALSE\n2   Subject_2    151     145       6        FALSE\n3   Subject_3    125     135     -10        FALSE\n4   Subject_4    126     122       4        FALSE\n5   Subject_5    115     115       0         TRUE\n6   Subject_6    132     122      10        FALSE\n7   Subject_7    132     123       9        FALSE\n8   Subject_8    129     126       3        FALSE\n9   Subject_9    134     126       8        FALSE\n10 Subject_10    139     129      10        FALSE\n11 Subject_11    127     132      -5        FALSE\n12 Subject_12    122     146     -24        FALSE\n13 Subject_13    127     120       7        FALSE\n14 Subject_14    135     114      21         TRUE\n15 Subject_15    133     121      12        FALSE\n16 Subject_16    128     120       8        FALSE\n17 Subject_17    147     128      19        FALSE\n18 Subject_18    138     120      18        FALSE\n19 Subject_19    140     133       7        FALSE\n20 Subject_20    132     115      17         TRUE"
+  },
+  {
+    "objectID": "Programming Base R.html#q4",
+    "href": "Programming Base R.html#q4",
+    "title": "Programming Base R",
+    "section": "Q4",
+    "text": "Q4\nFinally we need to access the pre blood pressure placebo column of data in our above list.\n\nbp_list$placebo$pre_bp2\n\n [1] 138 135 147 117 152 134 114 121 131 130"
+  }
+]
